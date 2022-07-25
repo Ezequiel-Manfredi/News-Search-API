@@ -31,18 +31,6 @@ public class AuthorModel {
         this.lastName = lastName;
         setFullName();
     }
-    public AuthorModel(
-        Long id, String firstName, 
-        String lastName, LocalDate createdAt, 
-        List<ArticleModel> articles
-    ) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        setFullName();
-        this.createdAt = createdAt;
-        this.articles = articles;
-    }
 
     public Long getId() {
         return id;
