@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import com.informatorio.news_search.converter.ArticleConverter;
 import com.informatorio.news_search.dto.article.ArticleDTO;
 import com.informatorio.news_search.dto.article.ArticleQueryDTO;
+import com.informatorio.news_search.exception.ArticleNotFoundException;
+import com.informatorio.news_search.exception.AuthorNotFoundException;
+import com.informatorio.news_search.exception.SourceNotFoundException;
 import com.informatorio.news_search.model.ArticleModel;
 import com.informatorio.news_search.model.AuthorModel;
 import com.informatorio.news_search.model.SourceModel;
@@ -40,12 +43,12 @@ public class ArticleService {
         Optional<AuthorModel> authorModel = authorRepository
             .findById(articleQueryDTO.getAuthor().getId());
         if(!authorModel.isPresent()) {
-            // throw new AuthorNotFoundException("autor no encontrado");
+            throw new AuthorNotFoundException("autor no encontrado");
         }
         Optional<SourceModel> sourceModel = sourceRepository
             .findById(articleQueryDTO.getSource().getId());
         if(!sourceModel.isPresent()) {
-            // throw new SourceNotFoundException("fuente no encontrada");
+            throw new SourceNotFoundException("fuente no encontrada");
         }
         
         ArticleModel articleModel = articleConverter
@@ -58,7 +61,7 @@ public class ArticleService {
         if(articleModel.isPresent()) {
             return articleConverter.toDTO(articleModel.get());
         } else {
-            return null;// throw new ArticleNotFoundException("articulo no encontrado");
+            throw new ArticleNotFoundException("articulo no encontrado");
         }
     }
 
@@ -67,7 +70,7 @@ public class ArticleService {
         if(articleModel.isPresent()) {
             articleRepository.delete(articleModel.get());
         } else {
-            // throw new ArticleNotFoundException("articulo no encontrado");
+            throw new ArticleNotFoundException("articulo no encontrado");
         }
     }
 
@@ -88,7 +91,7 @@ public class ArticleService {
                 if(authorModel.isPresent()) {
                     articleToModify.setAuthor(authorModel.get());
                 } else {
-                    // throw new AuthorNotFoundException("autor no encontrado");
+                    throw new AuthorNotFoundException("autor no encontrado");
                 }
             }
             if(articleToModify.getSource().getId() != articleQueryDTO.getSource().getId()) {
@@ -97,12 +100,12 @@ public class ArticleService {
                 if(sourceModel.isPresent()) {
                     articleToModify.setSource(sourceModel.get());
                 } else {
-                    // throw new SourceNotFoundException("fuente no encontrada");
+                    throw new SourceNotFoundException("fuente no encontrada");
                 }
             }
             articleRepository.save(articleToModify);
         } else {
-            // throw new ArticleNotFoundException("articulo no encontrado");
+            throw new ArticleNotFoundException("articulo no encontrado");
         }
     }
 }
