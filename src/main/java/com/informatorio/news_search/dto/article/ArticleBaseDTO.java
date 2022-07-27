@@ -2,13 +2,29 @@ package com.informatorio.news_search.dto.article;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Pattern;
+
 public class ArticleBaseDTO {
     private Long id;
+    @NotBlank(message = "titulo vacio")
     private String title;
+    @NotBlank(message = "descripcion vacia")
     private String description;
+    @Pattern(
+        regexp = "^https*://\\w+\\.\\w+.+", 
+        message = "url debe comenzar con https://dominio.algo"
+    )
     private String url;
+    @Pattern(
+        regexp = "^https*://\\w+\\.\\w+.+(\\.png|\\.jpg|\\.gif|\\.svg)$", 
+        message = "imagen debe cumplir formato de url y terminar con .png|.jpg|.gif|.svg"
+    )
     private String urlToImage;
+    @NotBlank(message = "contenido vacio")
     private String content;
+    @PastOrPresent(message = "fecha invalida")
     private LocalDate publishedAt;
     
     public ArticleBaseDTO() {}

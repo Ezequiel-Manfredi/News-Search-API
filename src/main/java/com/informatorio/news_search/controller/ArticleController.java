@@ -2,6 +2,8 @@ package com.informatorio.news_search.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,7 +34,7 @@ public class ArticleController {
 
     @PostMapping(value = {""})
     @ResponseStatus(HttpStatus.CREATED)
-    public void createArticle(@RequestBody ArticleQueryDTO articleQueryDTO) {
+    public void createArticle(@RequestBody @Valid ArticleQueryDTO articleQueryDTO) {
         articleService.create(articleQueryDTO);
     }
 
@@ -50,7 +52,7 @@ public class ArticleController {
 
     @PutMapping(value = {"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public void modifyArticle(@PathVariable Long id, @RequestBody ArticleQueryDTO articleQueryDTO) {
+    public void modifyArticle(@PathVariable Long id, @RequestBody @Valid ArticleQueryDTO articleQueryDTO) {
         articleService.modify(id, articleQueryDTO);
     }
 }
