@@ -8,23 +8,23 @@ import javax.validation.constraints.Pattern;
 
 public class ArticleBaseDTO {
     private Long id;
-    @NotBlank(message = "titulo vacio")
+    @NotBlank()
     private String title;
-    @NotBlank(message = "descripcion vacia")
+    @NotBlank()
     private String description;
     @Pattern(
         regexp = "^https*://\\w+\\.\\w+.+", 
-        message = "url debe comenzar con https://dominio.algo"
+        message = "debe comenzar con https://dominio.algo"
     )
     private String url;
     @Pattern(
         regexp = "^https*://\\w+\\.\\w+.+(\\.png|\\.jpg|\\.gif|\\.svg)$", 
-        message = "imagen debe cumplir formato de url y terminar con .png|.jpg|.gif|.svg"
+        message = "debe tener formato url y terminar con .png|.jpg|.gif|.svg"
     )
     private String urlToImage;
-    @NotBlank(message = "contenido vacio")
+    @NotBlank()
     private String content;
-    @PastOrPresent(message = "fecha invalida")
+    @PastOrPresent()
     private LocalDate publishedAt;
     
     public ArticleBaseDTO() {}
