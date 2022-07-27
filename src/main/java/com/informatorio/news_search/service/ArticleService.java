@@ -39,12 +39,12 @@ public class ArticleService {
 
     public void create(ArticleQueryDTO articleQueryDTO) {
         Optional<AuthorModel> authorModel = authorRepository
-            .findById(articleQueryDTO.getAuthor().getId());
+            .findById(articleQueryDTO.getAuthor());
         if(!authorModel.isPresent()) {
             throw new EntityNotFoundException("autor","no encontrado");
         }
         Optional<SourceModel> sourceModel = sourceRepository
-            .findById(articleQueryDTO.getSource().getId());
+            .findById(articleQueryDTO.getSource());
         if(!sourceModel.isPresent()) {
             throw new EntityNotFoundException("fuente","no encontrada");
         }
@@ -83,18 +83,18 @@ public class ArticleService {
             articleToModify.setUrlToImage(articleQueryDTO.getUrlToImage());
             articleToModify.setContent(articleQueryDTO.getContent());
             articleToModify.setPublishedAt(articleQueryDTO.getPublishedAt());
-            if(articleToModify.getAuthor().getId() != articleQueryDTO.getAuthor().getId()) {
+            if(articleToModify.getAuthor().getId() != articleQueryDTO.getAuthor()) {
                 Optional<AuthorModel> authorModel = authorRepository
-                    .findById(articleQueryDTO.getAuthor().getId());
+                    .findById(articleQueryDTO.getAuthor());
                 if(authorModel.isPresent()) {
                     articleToModify.setAuthor(authorModel.get());
                 } else {
                     throw new EntityNotFoundException("autor","no encontrado");
                 }
             }
-            if(articleToModify.getSource().getId() != articleQueryDTO.getSource().getId()) {
+            if(articleToModify.getSource().getId() != articleQueryDTO.getSource()) {
                 Optional<SourceModel> sourceModel = sourceRepository
-                    .findById(articleQueryDTO.getSource().getId());
+                    .findById(articleQueryDTO.getSource());
                 if(sourceModel.isPresent()) {
                     articleToModify.setSource(sourceModel.get());
                 } else {

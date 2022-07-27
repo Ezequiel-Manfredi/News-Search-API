@@ -2,19 +2,23 @@ package com.informatorio.news_search.dto.article;
 
 import java.time.LocalDate;
 
-import com.informatorio.news_search.dto.author.AuthorQueryDTO;
-import com.informatorio.news_search.dto.source.SourceQueryDTO;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 public class ArticleQueryDTO extends ArticleBaseDTO {
-    private AuthorQueryDTO author;
-    private SourceQueryDTO source;
+    @NotNull
+    @Positive
+    private Long author;
+    @NotNull
+    @Positive
+    private Long source;
     
     public ArticleQueryDTO() {}
     public ArticleQueryDTO(
         Long id, String title, String description, 
         String url, String urlToImage, 
         String content, LocalDate publishedAt, 
-        AuthorQueryDTO author, SourceQueryDTO source
+        Long author, Long source
     ) {
         super(
             id, title, description, url, 
@@ -24,10 +28,10 @@ public class ArticleQueryDTO extends ArticleBaseDTO {
         this.source = source;
     }
 
-    public AuthorQueryDTO getAuthor() {
+    public Long getAuthor() {
         return author;
     }
-    public SourceQueryDTO getSource() {
+    public Long getSource() {
         return source;
     }
 }
