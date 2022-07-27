@@ -11,7 +11,7 @@ import com.informatorio.news_search.converter.ArticleConverter;
 import com.informatorio.news_search.converter.AuthorConverter;
 import com.informatorio.news_search.dto.author.AuthorDTO;
 import com.informatorio.news_search.dto.author.AuthorQueryDTO;
-import com.informatorio.news_search.exception.AuthorNotFoundException;
+import com.informatorio.news_search.exception.EntityNotFoundException;
 import com.informatorio.news_search.model.AuthorModel;
 import com.informatorio.news_search.repository.AuthorRepository;
 
@@ -56,7 +56,7 @@ public class AuthorService {
                     .collect(Collectors.toList()
             ));
         } else {
-            throw new AuthorNotFoundException("autor no encontrado");
+            throw new EntityNotFoundException("autor","no encontrado");
         }
     }
 
@@ -65,7 +65,7 @@ public class AuthorService {
         if(authorModel.isPresent()) {
             authorRepository.delete(authorModel.get());
         } else {
-            throw new AuthorNotFoundException("autor no encontrado");
+            throw new EntityNotFoundException("autor","no encontrado");
         }
     }
 
@@ -77,7 +77,7 @@ public class AuthorService {
             authorToModify.setLastName(authorQueryDTO.getLastName());
             authorRepository.save(authorToModify);
         } else {
-            throw new AuthorNotFoundException("autor no encontrado");
+            throw new EntityNotFoundException("autor","no encontrado");
         }
     }
 }

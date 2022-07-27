@@ -11,7 +11,7 @@ import com.informatorio.news_search.converter.ArticleConverter;
 import com.informatorio.news_search.converter.SourceConverter;
 import com.informatorio.news_search.dto.source.SourceDTO;
 import com.informatorio.news_search.dto.source.SourceQueryDTO;
-import com.informatorio.news_search.exception.SourceNotFoundException;
+import com.informatorio.news_search.exception.EntityNotFoundException;
 import com.informatorio.news_search.model.SourceModel;
 import com.informatorio.news_search.repository.SourceRepository;
 
@@ -56,7 +56,7 @@ public class SourceService {
                     .collect(Collectors.toList()
             ));
         } else {
-            throw new SourceNotFoundException("fuente no encontrada");
+            throw new EntityNotFoundException("fuente","no encontrada");
         }
     }
 
@@ -65,7 +65,7 @@ public class SourceService {
         if(sourceModel.isPresent()) {
             sourceRepository.delete(sourceModel.get());
         } else {
-            throw new SourceNotFoundException("fuente no encontrada");
+            throw new EntityNotFoundException("fuente","no encontrada");
         }
     }
 
@@ -76,7 +76,7 @@ public class SourceService {
             sourceToModify.setName(sourceQueryDTO.getName());
             sourceRepository.save(sourceToModify);
         } else {
-            throw new SourceNotFoundException("fuente no encontrada");
+            throw new EntityNotFoundException("fuente","no encontrada");
         }
     }
 }
