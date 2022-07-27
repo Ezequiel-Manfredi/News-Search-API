@@ -3,6 +3,8 @@ package com.informatorio.news_search.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.ConstraintViolationException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -42,6 +44,22 @@ public class ExceptionController {
                     error.getDefaultMessage()
                 )
             )
+            .collect(Collectors.toList());
+    }
+
+    @ResponseBody
+    @ExceptionHandler({
+        ConstraintViolationException.class
+    })
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public List<InvalidFieldExceptionDTO> invalidParams(ConstraintViolationException errors) {
+        return errors
+            .getConstraintViolations()
+            .stream()
+            .map(e -> new InvalidFieldExceptionDTO(
+                e.getPropertyPath().toString().split("\\.")[1], 
+                e.getMessage()
+            ))
             .collect(Collectors.toList());
     }
 }
