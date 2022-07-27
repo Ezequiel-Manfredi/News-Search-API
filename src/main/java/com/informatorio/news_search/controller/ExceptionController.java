@@ -6,22 +6,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.informatorio.news_search.dto.ExceptionDTO;
-import com.informatorio.news_search.exception.ArticleNotFoundException;
-import com.informatorio.news_search.exception.AuthorNotFoundException;
-import com.informatorio.news_search.exception.SourceNotFoundException;
+import com.informatorio.news_search.dto.exception.NotFoundExceptionDTO;
+import com.informatorio.news_search.exception.EntityNotFoundException;
 
 @RestControllerAdvice
 public class ExceptionController {
-    
     @ResponseBody
     @ExceptionHandler({
-        ArticleNotFoundException.class,
-        AuthorNotFoundException.class,
-        SourceNotFoundException.class
+        EntityNotFoundException.class
     })
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ExceptionDTO entityNotFound(RuntimeException error){
-        return new ExceptionDTO(error.getMessage());
+    public NotFoundExceptionDTO entityNotFound(EntityNotFoundException error){
+        return new NotFoundExceptionDTO(error.getName(), error.getMessage());
     }
 }
