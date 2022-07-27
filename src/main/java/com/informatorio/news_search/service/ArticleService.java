@@ -1,14 +1,16 @@
 package com.informatorio.news_search.service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.informatorio.news_search.converter.ArticleConverter;
 import com.informatorio.news_search.dto.article.ArticleDTO;
+import com.informatorio.news_search.dto.article.ArticlePageDTO;
 import com.informatorio.news_search.dto.article.ArticleQueryDTO;
 import com.informatorio.news_search.exception.EntityNotFoundException;
 import com.informatorio.news_search.model.ArticleModel;
@@ -29,12 +31,28 @@ public class ArticleService {
     @Autowired
     SourceRepository sourceRepository;
     
-    public List<ArticleDTO> getAll() {
-        return articleRepository
-            .findAll()
-            .stream()
-            .map(articleModel -> articleConverter.toDTO(articleModel))
-            .collect(Collectors.toList());
+    public ArticlePageDTO getAll(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page-1,size);
+        Page<ArticleDTO> articlePage = articleRepository
+            .findAll(pageable)
+            .map(articleModel -> articleConverter.toDTO(articleModel));
+        
+        return new ArticlePageDTO(
+            articlePage.getTotalElements(), 
+            articlePage.getContent()
+        );
+    }
+
+    public ArticlePageDTO getBy(String query, Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page-1,size);
+        Page<ArticleDTO> articlePage = articleRepository
+            .findByTitleContainingOrDescriptionContaining(query, query, pageable)
+            .map(articleModel -> articleConverter.toDTO(articleModel));
+
+        return new ArticlePageDTO(
+            articlePage.getTotalElements(),
+            articlePage.getContent()
+        );
     }
 
     public void create(ArticleQueryDTO articleQueryDTO) {
