@@ -2,6 +2,8 @@ package com.informatorio.news_search.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,7 +34,7 @@ public class AuthorController {
 
     @PostMapping(value = {""})
     @ResponseStatus(HttpStatus.CREATED)
-    public void createAuthor(@RequestBody AuthorQueryDTO authorQueryDTO) {
+    public void createAuthor(@RequestBody @Valid AuthorQueryDTO authorQueryDTO) {
         authorService.create(authorQueryDTO);
     }
 
@@ -50,7 +52,7 @@ public class AuthorController {
 
     @PutMapping(value = {"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public void modifyAuthor(@PathVariable Long id, @RequestBody AuthorQueryDTO authorQueryDTO) {
+    public void modifyAuthor(@PathVariable Long id, @RequestBody @Valid AuthorQueryDTO authorQueryDTO) {
         authorService.modify(id, authorQueryDTO);
     }
 }

@@ -1,8 +1,12 @@
 package com.informatorio.news_search.dto.author;
 
+import javax.validation.constraints.NotBlank;
+
 public class AuthorQueryDTO {
     private Long id;
+    @NotBlank
     private String firstName;
+    @NotBlank
     private String lastName;
     
     public AuthorQueryDTO() {}
