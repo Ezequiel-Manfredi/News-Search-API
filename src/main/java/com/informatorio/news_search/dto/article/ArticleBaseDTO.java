@@ -8,9 +8,9 @@ import javax.validation.constraints.Pattern;
 
 public class ArticleBaseDTO {
     private Long id;
-    @NotBlank()
+    @NotBlank
     private String title;
-    @NotBlank()
+    @NotBlank
     private String description;
     @Pattern(
         regexp = "^https*://\\w+\\.\\w+.+", 
@@ -22,9 +22,9 @@ public class ArticleBaseDTO {
         message = "debe tener formato url y terminar con .png|.jpg|.gif|.svg"
     )
     private String urlToImage;
-    @NotBlank()
+    @NotBlank
     private String content;
-    @PastOrPresent()
+    @PastOrPresent
     private LocalDate publishedAt;
     
     public ArticleBaseDTO() {}
