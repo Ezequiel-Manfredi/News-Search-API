@@ -2,6 +2,8 @@ package com.informatorio.news_search.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,7 +34,7 @@ public class SourceController {
 
     @PostMapping(value = {""})
     @ResponseStatus(HttpStatus.CREATED)
-    public void createSource(@RequestBody SourceQueryDTO sourceQueryDTO) {
+    public void createSource(@RequestBody @Valid SourceQueryDTO sourceQueryDTO) {
         sourceService.create(sourceQueryDTO);
     }
 
@@ -50,7 +52,7 @@ public class SourceController {
 
     @PutMapping(value = {"/{id}"})
     @ResponseStatus(HttpStatus.OK)
-    public void modifySource(@PathVariable Long id, @RequestBody SourceQueryDTO sourceQueryDTO) {
+    public void modifySource(@PathVariable Long id, @RequestBody @Valid SourceQueryDTO sourceQueryDTO) {
         sourceService.modify(id, sourceQueryDTO);
     }
 }

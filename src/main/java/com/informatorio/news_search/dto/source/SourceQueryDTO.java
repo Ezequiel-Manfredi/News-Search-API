@@ -1,7 +1,10 @@
 package com.informatorio.news_search.dto.source;
 
+import javax.validation.constraints.NotBlank;
+
 public class SourceQueryDTO {
     private Long id;
+    @NotBlank
     private String name;
 
     public SourceQueryDTO() {}
