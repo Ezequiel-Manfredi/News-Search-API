@@ -21,7 +21,7 @@ public class ExceptionController {
         SourceNotFoundException.class
     })
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ExceptionDTO EntityNotFound(RuntimeException error){
+    public ExceptionDTO entityNotFound(RuntimeException error){
         return new ExceptionDTO(error.getMessage());
     }
 }
