@@ -25,7 +25,7 @@ public class ExceptionController {
     })
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public NotFoundExceptionDTO entityNotFound(EntityNotFoundException error){
-        return new NotFoundExceptionDTO(error.getName(), error.getMessage());
+        return new NotFoundExceptionDTO(error.getEntity(), error.getError());
     }
 
     @ResponseBody

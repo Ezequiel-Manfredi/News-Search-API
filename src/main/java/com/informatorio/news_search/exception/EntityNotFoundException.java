@@ -1,20 +1,20 @@
 package com.informatorio.news_search.exception;
 
 public class EntityNotFoundException extends RuntimeException {
-    private String name = "entity";
-    private String message = "notFound";
+    private String entity = "entity";
+    private String error = "notFound";
 
     public EntityNotFoundException() {}
-    public EntityNotFoundException(String message, String name) {
-        super(message);
-        this.name = name;
-        this.message = message;
+    public EntityNotFoundException(String entity, String error) {
+        super(error);
+        this.entity = entity;
+        this.error = error;
     }
 
-    public String getName() {
-        return name;
+    public String getEntity() {
+        return entity;
     }
-    public String getMessage() {
-        return message;
+    public String getError() {
+        return error;
     }
 }

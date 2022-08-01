@@ -1,17 +1,17 @@
 package com.informatorio.news_search.dto.exception;
 
 public class NotFoundExceptionDTO {
-    private String name;
+    private String entity;
     private String error;
 
     public NotFoundExceptionDTO() {}
-    public NotFoundExceptionDTO(String name, String error) {
-        this.name = name;
+    public NotFoundExceptionDTO(String entity, String error) {
+        this.entity = entity;
         this.error = error;
     }
     
-    public String getName() {
-        return name;
+    public String getEntity() {
+        return entity;
     }
     public String getError() {
         return error;
