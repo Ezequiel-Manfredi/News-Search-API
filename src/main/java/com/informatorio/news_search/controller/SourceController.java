@@ -24,7 +24,7 @@ import com.informatorio.news_search.dto.source.SourceQueryDTO;
 import com.informatorio.news_search.service.SourceService;
 
 @RestController
-@RequestMapping(value = "/sources")
+@RequestMapping(value = "/api/v1/sources")
 @Validated
 public class SourceController {
     @Autowired

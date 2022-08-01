@@ -24,7 +24,7 @@ import com.informatorio.news_search.dto.article.ArticleQueryDTO;
 import com.informatorio.news_search.service.ArticleService;
 
 @RestController
-@RequestMapping(value = "/articles")
+@RequestMapping(value = "/api/v1/articles")
 @Validated
 public class ArticleController {
     @Autowired

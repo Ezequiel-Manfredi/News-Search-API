@@ -27,7 +27,7 @@ import com.informatorio.news_search.dto.author.AuthorQueryDTO;
 import com.informatorio.news_search.service.AuthorService;
 
 @RestController
-@RequestMapping(value = "/authors")
+@RequestMapping(value = "/api/v1/authors")
 @Validated
 public class AuthorController {
     @Autowired
