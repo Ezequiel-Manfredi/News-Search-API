@@ -10,5 +10,5 @@ import com.informatorio.news_search.model.AuthorModel;
 
 public interface AuthorRepository extends PagingAndSortingRepository<AuthorModel,Long> {
     public Page<AuthorModel> findByFullNameContaining(String fullName, Pageable pageable);
-    public Page<AuthorModel> findByCreatedAtAfter(LocalDate createdAt, Pageable pageable);
+    public Page<AuthorModel> findByCreatedAtGreaterThanEqual(LocalDate createdAt, Pageable pageable);
 }

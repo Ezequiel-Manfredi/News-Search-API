@@ -1,6 +1,9 @@
 package com.informatorio.news_search.controller;
 
+import java.time.LocalDate;
+
 import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
@@ -34,14 +37,22 @@ public class AuthorController {
     @ResponseStatus(HttpStatus.OK)
     public AuthorPageDTO allAuthors(
         @RequestParam(required = false) @Size(min = 3) String query, 
-        // @RequestParam(required = false) @NotBlank String date,
-        @RequestParam @Positive Integer page, 
-        @RequestParam @Positive Integer size
+        @RequestParam(required = false)
+        @Pattern(
+            regexp = "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$", 
+            message = "debe ser del formato yyyy-MM-dd"
+        ) String dateStr,
+        @RequestParam(required = false, defaultValue = "1") @Positive Integer page, 
+        @RequestParam(required = false, defaultValue = "10") @Positive Integer size
     ) {
-        if(query != null) {
-            return authorService.getBy(query, page, size);
+        if(dateStr != null) {
+            LocalDate date = LocalDate.parse(dateStr);
+            return authorService.getAll(page, size, date, null);
         }
-        return authorService.getAll(page, size);
+        if(query != null) {
+            return authorService.getAll(page, size, null, query);
+        }
+        return authorService.getAll(page, size, null, null);
     }
 
     @PostMapping(value = {""})

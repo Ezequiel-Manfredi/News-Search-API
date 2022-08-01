@@ -1,5 +1,6 @@
 package com.informatorio.news_search.service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -27,10 +28,21 @@ public class AuthorService {
     @Autowired
     ArticleConverter articleConverter;
 
-    public AuthorPageDTO getAll(Integer page, Integer size) {
+    public AuthorPageDTO getAll(Integer page, Integer size, LocalDate date, String query) {
         Pageable pageable = PageRequest.of(page-1,size);
-        Page<AuthorDTO> authorPage = authorRepository
-            .findAll(pageable)
+        Page<AuthorModel> filterPage;
+
+        if(date != null) {
+            filterPage = authorRepository
+                .findByCreatedAtGreaterThanEqual(date, pageable);
+        } else if(query != null) {
+            filterPage = authorRepository
+                .findByFullNameContaining(query, pageable);
+        } else {
+            filterPage = authorRepository
+                .findAll(pageable);
+        }
+        Page<AuthorDTO> authorPage = filterPage
             .map(authorModel -> authorConverter.toDTO(
                 authorModel, 
                 authorModel
@@ -40,25 +52,6 @@ public class AuthorService {
                     .collect(Collectors.toList())
             ));
 
-        return new AuthorPageDTO(
-            authorPage.getTotalElements(),
-            authorPage.getContent()
-        );
-    }
-
-    public AuthorPageDTO getBy(String query, Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page-1,size);
-        Page<AuthorDTO> authorPage = authorRepository
-            .findByFullNameContaining(query, pageable)
-            .map(authorModel -> authorConverter.toDTO(
-                authorModel, 
-                authorModel
-                    .getArticles()
-                    .stream()
-                    .map(articleModel -> articleConverter.toBaseDTO(articleModel))
-                    .collect(Collectors.toList())
-            ));
-        
         return new AuthorPageDTO(
             authorPage.getTotalElements(),
             authorPage.getContent()
