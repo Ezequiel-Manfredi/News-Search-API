@@ -38,9 +38,9 @@ public class ArticleController {
         @RequestParam @Positive Integer size
     ) {
         if(query != null) {
-            return articleService.getBy(query, page, size);
+            return articleService.getAll(page, size, query);
         }
-        return articleService.getAll(page, size);
+        return articleService.getAll(page, size, null);
     }
 
     @PostMapping(value = {""})

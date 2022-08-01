@@ -31,26 +31,22 @@ public class ArticleService {
     @Autowired
     SourceRepository sourceRepository;
     
-    public ArticlePageDTO getAll(Integer page, Integer size) {
+    public ArticlePageDTO getAll(Integer page, Integer size, String query) {
         Pageable pageable = PageRequest.of(page-1,size);
-        Page<ArticleDTO> articlePage = articleRepository
-            .findAll(pageable)
+        Page<ArticleModel> filterPage;
+
+        if(query != null) {
+            filterPage = articleRepository
+                .findByTitleContainingOrDescriptionContaining(query, query, pageable);
+        } else {
+            filterPage = articleRepository
+                .findAll(pageable);
+        }
+        Page<ArticleDTO> articlePage = filterPage
             .map(articleModel -> articleConverter.toDTO(articleModel));
         
         return new ArticlePageDTO(
             articlePage.getTotalElements(), 
-            articlePage.getContent()
-        );
-    }
-
-    public ArticlePageDTO getBy(String query, Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page-1,size);
-        Page<ArticleDTO> articlePage = articleRepository
-            .findByTitleContainingOrDescriptionContaining(query, query, pageable)
-            .map(articleModel -> articleConverter.toDTO(articleModel));
-
-        return new ArticlePageDTO(
-            articlePage.getTotalElements(),
             articlePage.getContent()
         );
     }

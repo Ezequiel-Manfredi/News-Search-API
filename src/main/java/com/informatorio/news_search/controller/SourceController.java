@@ -38,9 +38,9 @@ public class SourceController {
         @RequestParam @Positive Integer size
     ) {
         if(query != null) {
-            return sourceService.getBy(query, page, size);
+            return sourceService.getAll(page, size, query);
         }
-        return sourceService.getAll(page, size);
+        return sourceService.getAll(page, size, null);
     }
 
     @PostMapping(value = {""})

@@ -27,29 +27,18 @@ public class SourceService {
     @Autowired
     ArticleConverter articleConverter;
 
-    public SourcePageDTO getAll(Integer page, Integer size) {
+    public SourcePageDTO getAll(Integer page, Integer size, String query) {
         Pageable pageable = PageRequest.of(page-1,size);
-        Page<SourceDTO> sourcePage = sourceRepository
-            .findAll(pageable)
-            .map(sourceModel -> sourceConverter.toDTO(
-                sourceModel, 
-                sourceModel
-                    .getArticles()
-                    .stream()
-                    .map(articleModel -> articleConverter.toBaseDTO(articleModel))
-                    .collect(Collectors.toList())
-            ));
-        
-        return new SourcePageDTO(
-            sourcePage.getTotalElements(),
-            sourcePage.getContent()
-        );
-    }
+        Page<SourceModel> filterPage;
 
-    public SourcePageDTO getBy(String query, Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page-1,size);
-        Page<SourceDTO> sourcePage = sourceRepository
-            .findByNameContaining(query, pageable)
+        if(query != null) {
+            filterPage = sourceRepository
+                .findByNameContaining(query, pageable);
+        }else {
+            filterPage = sourceRepository
+                .findAll(pageable);
+        }
+        Page<SourceDTO> sourcePage = filterPage
             .map(sourceModel -> sourceConverter.toDTO(
                 sourceModel, 
                 sourceModel
