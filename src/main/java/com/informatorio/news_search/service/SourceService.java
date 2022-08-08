@@ -68,8 +68,8 @@ public class SourceService {
                     .getArticles()
                     .stream()
                     .map(articleModel -> articleConverter.toBaseDTO(articleModel))
-                    .collect(Collectors.toList()
-            ));
+                    .collect(Collectors.toList())
+            );
         } else {
             throw new EntityNotFoundException("fuente","no encontrada");
         }
